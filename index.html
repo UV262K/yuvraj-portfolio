@@ -28,6 +28,7 @@
       <a href="#skills">Skills</a>
       <a href="#education">Education</a>
       <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
       <a href="#impact">Impact</a>
       <a href="#achievements">Achievements</a>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">☼ Theme</button>
@@ -184,14 +185,26 @@
           </div>
           <div class="impact-result"><strong data-count="28" data-suffix="%">0%</strong><span>potential effort reduction</span></div>
         </article>
-        <article class="card impact-card impact-metrics reveal">
-          <div class="impact-top"><span class="impact-icon">✳</span><span class="impact-label">Portfolio snapshot</span></div>
-          <div class="metric-row"><strong data-count="4">0</strong><span>featured projects</span></div>
-          <div class="metric-row"><strong data-count="8">0</strong><span>core technologies</span></div>
-          <div class="metric-row"><strong data-count="3">0</strong><span>focus areas · Cloud / AI / Data</span></div>
+        <article class="card impact-card impact-chart-card reveal">
+          <div class="impact-top"><span class="impact-icon">⌁</span><span class="impact-label">Interactive explorer</span></div>
+          <div class="chart-controls" role="group" aria-label="Choose project chart">
+            <button class="chart-tab active" type="button" data-chart="planning" aria-pressed="true">LifeOS</button>
+            <button class="chart-tab" type="button" data-chart="discovery" aria-pressed="false">ShopMatch</button>
+          </div>
+          <div class="mini-chart" role="img" aria-label="Illustrative indexed comparison of baseline and improved workflow">
+            <div class="mini-chart-head"><span id="chartTitle">Planning workflow</span><strong id="chartDelta">−35%</strong></div>
+            <svg viewBox="0 0 320 120" class="line-chart" role="img" aria-label="Interactive illustrative trend chart">
+              <defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#80f0d4" stop-opacity=".28"/><stop offset="100%" stop-color="#80f0d4" stop-opacity="0"/></linearGradient></defs>
+              <path class="chart-gridline" d="M12 25H308 M12 55H308 M12 85H308"/>
+              <path id="chartArea" class="chart-area" d="M12 24 L86 42 L160 53 L234 67 L308 78 L308 100 L12 100 Z"/>
+              <path id="chartLine" class="chart-line" d="M12 24 L86 42 L160 53 L234 67 L308 78"/>
+              <circle class="chart-point" cx="12" cy="24" r="4"/><circle class="chart-point" cx="86" cy="42" r="4"/><circle class="chart-point" cx="160" cy="53" r="4"/><circle class="chart-point" cx="234" cy="67" r="4"/><circle class="chart-point" cx="308" cy="78" r="4"/>
+            </svg>
+            <div class="chart-axis"><span>Baseline</span><span>Optimised workflow</span></div>
+          </div>
         </article>
       </div>
-      <p class="impact-disclaimer">Efficiency figures are illustrative targets, not measured project results. They will be replaced with verified benchmark data when tests are available.</p>
+      <p class="impact-disclaimer">Efficiency figures and chart trends are illustrative examples, not measured project results.</p>
     </section>
 
     <!-- PROJECTS -->
@@ -250,6 +263,19 @@
         <div class="card reveal"><span>◌</span><h3>Curiosity for AI</h3><p>Exploring how language models and intelligent tools can solve practical problems.</p></div>
         <div class="card reveal"><span>↗</span><h3>Build to learn</h3><p>Learning through hands-on projects, experiments, iteration and real-world constraints.</p></div>
         <div class="card reveal"><span>⌘</span><h3>Data with purpose</h3><p>Exploring recommendation systems, data analysis and the stories behind the numbers.</p></div>
+      </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="section resume-section" id="resume">
+      <div class="resume-card card reveal">
+        <div class="resume-mark" aria-hidden="true">CV</div>
+        <div class="resume-copy">
+          <p class="eyebrow">Resume</p>
+          <h2>Want the one-page version?</h2>
+          <p>AI product development · Generative AI · Software engineering</p>
+        </div>
+        <a class="btn resume-download" href="assets/Yuvraj_Singh_Pathania_Resume.pdf" download="Yuvraj_Singh_Pathania_Resume.pdf">Download PDF <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
