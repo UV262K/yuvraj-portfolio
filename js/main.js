@@ -23,6 +23,43 @@
 
   document.querySelectorAll('#year').forEach(el => el.textContent = new Date().getFullYear());
 
+  // User-controlled colour theme.
+  const themeToggle = document.getElementById('themeToggle');
+  const applyTheme = light => {
+    document.body.classList.toggle('light-theme', light);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(light));
+      themeToggle.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+      themeToggle.textContent = light ? '☾ Dark' : '☼ Theme';
+    }
+  };
+  let lightTheme = false;
+  try { lightTheme = localStorage.getItem('yuvraj-portfolio-theme') === 'light'; } catch (_) {}
+  applyTheme(lightTheme);
+  themeToggle?.addEventListener('click', () => {
+    lightTheme = !document.body.classList.contains('light-theme');
+    applyTheme(lightTheme);
+    try { localStorage.setItem('yuvraj-portfolio-theme', lightTheme ? 'light' : 'dark'); } catch (_) {}
+  });
+
+  // Filter projects by category without leaving the page.
+  const filterButtons = document.querySelectorAll('[data-filter]');
+  const projectCards = document.querySelectorAll('.project[data-category]');
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+    filterButtons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+    projectCards.forEach(card => {
+      const show = filter === 'all' || card.dataset.category === filter;
+      card.classList.toggle('is-filtered-out', !show);
+      if (show) card.classList.add('in-view');
+    });
+  }));
+
+
   const revealItems = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
