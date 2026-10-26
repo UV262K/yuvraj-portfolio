@@ -66,7 +66,7 @@
   onScroll();
   toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // Direct contact delivery via FormSubmit. First submission triggers inbox verification.
+  // Direct contact delivery via FormSubmit's documented JSON/AJAX endpoint.
   const form = document.getElementById('form');
   const formMsg = document.getElementById('formMsg');
   form?.addEventListener('submit', async event => {
@@ -77,19 +77,28 @@
     if (button) { button.disabled = true; button.textContent = 'Sending…'; }
     if (formMsg) formMsg.textContent = '';
     try {
+      const payload = Object.fromEntries(new FormData(form).entries());
+      payload._replyto = payload.email;
       const response = await fetch('https://formsubmit.co/ajax/yuvrajsinghpathania26@gmail.com', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
       const result = await response.json();
-      if (!response.ok || result.success === false || result.success === 'false') {
-        throw new Error(result.message || 'Unable to send message');
+      // FormSubmit can return HTTP 200 for failures, so check its success field explicitly.
+      if (!response.ok || !(result.success === true || result.success === 'true')) {
+        throw new Error(result.message || 'Form service rejected the submission. Please verify the receiving email address.');
       }
       form.reset();
-      if (formMsg) formMsg.textContent = 'Message submitted! Thank you for reaching out.';
+      if (formMsg) formMsg.textContent = 'Message sent successfully! Thank you for reaching out.';
     } catch (error) {
-      if (formMsg) formMsg.textContent = 'Could not submit right now. Please email me directly using the Email link below.';
+      console.error('Portfolio contact form:', error);
+      if (formMsg) formMsg.textContent = error?.message
+        ? 'Message not sent: ' + error.message
+        : 'Could not connect to the email service. Please try again or use the Email link below.';
     } finally {
       if (button) { button.disabled = false; button.textContent = originalLabel; }
     }
