@@ -27,6 +27,26 @@ main{width:min(calc(100% - 40px),var(--max));margin:0 auto}
 .hero{min-height:calc(92vh - 70px);display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:clamp(35px,7vw,100px);padding:100px 0 110px}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(168,255,207,.25);background:rgba(168,255,207,.07);color:var(--accent);border-radius:100px;font-size:.82rem;font-weight:700;margin:0 0 20px}
 h1,h2,h3,p{margin-top:0}h1{font-size:clamp(3.1rem,7vw,6rem);line-height:.99;letter-spacing:-.075em;margin-bottom:24px;font-weight:800}h1 .grad{display:inline-block;background:linear-gradient(110deg,var(--accent),#b9a5ff 75%);background-clip:text;-webkit-background-clip:text;color:transparent}
+
+/* Brand-forward motion: sliding entrance, marquee, and project reveals */
+.brand-heading{animation:brandEnter .95s cubic-bezier(.2,.8,.2,1) both}
+.brand-heading .grad{animation:gradientDrift 6s ease-in-out infinite;background-size:180% 180%}
+@keyframes brandEnter{from{opacity:0;transform:translateX(-42px);filter:blur(7px)}to{opacity:1;transform:translateX(0);filter:blur(0)}}
+@keyframes gradientDrift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.brand-marquee{overflow:hidden;margin:0 calc((min(calc(100vw - 40px),var(--max)) - 100vw)/2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(168,255,207,.035);padding:15px 0;transform:rotate(-1deg) scale(1.02)}
+.marquee-track{display:flex;width:max-content;animation:marqueeSlide 30s linear infinite}
+.marquee-track span{flex-shrink:0;padding-right:28px;color:var(--accent);font-size:.76rem;font-weight:800;letter-spacing:.18em;white-space:nowrap}
+@keyframes marqueeSlide{to{transform:translateX(-50%)}}
+.project.reveal:nth-child(odd){transform:translateX(-28px);opacity:0}
+.project.reveal:nth-child(even){transform:translateX(28px);opacity:0}
+.project.reveal.in-view{transform:translateX(0);opacity:1}
+.project.reveal.in-view:hover{transform:translateY(-4px)}
+.hero-text .chip{animation:brandEnter .7s .05s both}
+.hero-text .lead{animation:brandEnter .8s .2s both}
+.hero-text .cta{animation:brandEnter .8s .3s both}
+.hero-text .stats{animation:brandEnter .8s .4s both}
+@media(prefers-reduced-motion:reduce){.brand-heading,.brand-heading .grad,.marquee-track,.hero-text .chip,.hero-text .lead,.hero-text .cta,.hero-text .stats{animation:none!important}.project.reveal:nth-child(odd),.project.reveal:nth-child(even){opacity:1;transform:none}}
+
 .lead{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--muted);max-width:590px;line-height:1.9}.cta{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 38px}
 .stats{display:flex;gap:clamp(22px,4vw,52px);border-top:1px solid var(--line);padding-top:25px}.stats div{display:flex;flex-direction:column;gap:2px}.stats strong{font-size:1.55rem;letter-spacing:-.04em}.stats span{font-size:.75rem;color:var(--muted)}
 .hero-card{position:relative;padding:25px 0}.code-card{position:relative;z-index:1;background:linear-gradient(145deg,rgba(24,36,60,.97),rgba(13,21,39,.97));border:1px solid rgba(190,205,240,.18);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;transform:rotate(1.2deg);transition:transform .35s}.hero-card:hover .code-card{transform:rotate(0) translateY(-4px)}
