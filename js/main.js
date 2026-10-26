@@ -66,27 +66,32 @@
   onScroll();
   toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // A static site cannot send email by itself. Open the visitor's email app with a prefilled draft.
+  // Direct contact delivery via FormSubmit. First submission triggers inbox verification.
   const form = document.getElementById('form');
   const formMsg = document.getElementById('formMsg');
-  form?.addEventListener('submit', event => {
+  form?.addEventListener('submit', async event => {
     event.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
-    if (!name || !email || !message) {
-      if (formMsg) formMsg.textContent = 'Please complete all fields first.';
-      return;
-    }
-    const recipient = 'youremail@example.com'; // Replace with your real email before publishing.
-    const subject = encodeURIComponent('Portfolio message from ' + name);
-    const body = encodeURIComponent(message + '\n\nFrom: ' + name + '\nReply to: ' + email);
-    if (formMsg) formMsg.textContent = recipient === 'youremail@example.com'
-      ? 'Replace the placeholder email in js/main.js to enable contact messages.'
-      : 'Opening your email app…';
-    if (recipient !== 'youremail@example.com') {
-      window.location.href = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
+    if (!form.reportValidity()) return;
+    const button = form.querySelector('button[type="submit"]');
+    const originalLabel = button?.textContent || 'Send message';
+    if (button) { button.disabled = true; button.textContent = 'Sending…'; }
+    if (formMsg) formMsg.textContent = '';
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/yuvrajsinghpathania26@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      const result = await response.json();
+      if (!response.ok || result.success === false || result.success === 'false') {
+        throw new Error(result.message || 'Unable to send message');
+      }
+      form.reset();
+      if (formMsg) formMsg.textContent = 'Message submitted! Thank you for reaching out.';
+    } catch (error) {
+      if (formMsg) formMsg.textContent = 'Could not submit right now. Please email me directly using the Email link below.';
+    } finally {
+      if (button) { button.disabled = false; button.textContent = originalLabel; }
     }
   });
 })();
