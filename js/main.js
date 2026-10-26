@@ -23,6 +23,41 @@
 
   document.querySelectorAll('#year').forEach(el => el.textContent = new Date().getFullYear());
 
+
+  // Interactive project impact graph (illustrative indexed values).
+  const chartTabs = document.querySelectorAll('[data-chart]');
+  const chartTitle = document.getElementById('chartTitle');
+  const chartDelta = document.getElementById('chartDelta');
+  const chartLine = document.getElementById('chartLine');
+  const chartArea = document.getElementById('chartArea');
+  const chartPoints = document.querySelectorAll('.chart-point');
+  const chartSeries = {
+    planning: { title: 'Planning workflow', delta: '−35%', points: [[12,24],[86,42],[160,53],[234,67],[308,78]] },
+    discovery: { title: 'Product discovery', delta: '−28%', points: [[12,24],[86,34],[160,48],[234,63],[308,72]] }
+  };
+  chartTabs.forEach(tab => tab.addEventListener('click', () => {
+    const series = chartSeries[tab.dataset.chart];
+    if (!series || !chartLine || !chartArea) return;
+    chartTabs.forEach(item => {
+      const active = item === tab;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+    const points = series.points.map(([x,y]) => `${x},${y}`).join(' L');
+    chartLine.setAttribute('d', 'M' + points);
+    chartArea.setAttribute('d', 'M' + points + ' L308 100 L12 100 Z');
+    chartPoints.forEach((point, index) => {
+      const [x,y] = series.points[index];
+      point.setAttribute('cx', x);
+      point.setAttribute('cy', y);
+    });
+    if (chartTitle) chartTitle.textContent = series.title;
+    if (chartDelta) chartDelta.textContent = series.delta;
+    chartLine.classList.remove('chart-redraw');
+    void chartLine.getBoundingClientRect();
+    chartLine.classList.add('chart-redraw');
+  }));
+
   // User-controlled colour theme.
   const themeToggle = document.getElementById('themeToggle');
   const applyTheme = light => {
