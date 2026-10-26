@@ -49,7 +49,7 @@
         const duration = 900;
         const tick = now => {
           const progress = Math.min((now - start) / duration, 1);
-          el.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3)));
+          el.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3))) + (el.dataset.suffix || '');
           if (progress < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
