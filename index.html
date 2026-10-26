@@ -30,6 +30,7 @@
       <a href="#projects">Projects</a>
       <a href="#impact">Impact</a>
       <a href="#achievements">Achievements</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">☼ Theme</button>
       <a href="#contact" class="btn btn-small">Let's talk</a>
     </nav>
   </header>
@@ -199,29 +200,35 @@
         <p class="eyebrow">Projects</p>
         <h2>Things I've built</h2>
       </div>
+      <div class="project-filters" role="group" aria-label="Filter projects">
+        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" type="button" data-filter="product" aria-pressed="false">Product</button>
+        <button class="filter-btn" type="button" data-filter="data" aria-pressed="false">Data &amp; AI</button>
+        <button class="filter-btn" type="button" data-filter="web" aria-pressed="false">Web</button>
+      </div>
       <div class="projects">
-        <article class="card project reveal">
+        <article class="card project reveal" data-category="product">
           <div class="p-icon c1">📅</div>
           <h3>LifeOS</h3>
           <p>A local personal planner built with Node.js and SQLite. Modules, goals, weekly plans, progress tracking and a finance section with progress bars showing how much of each budget is used.</p>
           <div class="tags"><span>Node.js</span><span>SQLite</span><span>JavaScript</span></div>
           <a href="https://github.com/UV262K/LifeOS" target="_blank" rel="noopener" class="link">View on GitHub →</a>
         </article>
-        <article class="card project reveal">
+        <article class="card project reveal" data-category="data">
           <div class="p-icon c2">🛍️</div>
           <h3>ShopMatch</h3>
           <p>E-commerce product recommendations using regression and collaborative filtering on purchase history, with data cleaning, exploratory analysis, model evaluation and visualisation in R. Built with Sagar Raut.</p>
           <div class="tags"><span>R</span><span>Regression</span><span>Collaborative Filtering</span></div>
           <a href="#contact" class="link">Ask me about it →</a>
         </article>
-        <article class="card project reveal">
+        <article class="card project reveal" data-category="web">
           <div class="p-icon c3">🦇</div>
           <h3>BAT ASSIST</h3>
           <p>A Batman-inspired, voice-controlled virtual assistant for the web. It combines the Web Speech API with a creative, themed interface.</p>
           <div class="tags"><span>HTML</span><span>JavaScript</span><span>Web Speech API</span></div>
           <a href="https://github.com/UV262K/BAT-ASSIST-" target="_blank" rel="noopener" class="link">View on GitHub →</a>
         </article>
-        <article class="card project reveal">
+        <article class="card project reveal" data-category="web">
           <div class="p-icon c1">🧠</div>
           <h3>GENOID</h3>
           <p>A JavaScript project from my GitHub. TODO: add one line on what GENOID does before submitting.</p>
